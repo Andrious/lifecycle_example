@@ -1,10 +1,13 @@
 import 'package:lifecycle_example/src/source.dart';
 
 class AppMenu extends AppPopupMenu<String> {
-  AppMenu({Key key})
+  AppMenu({Key key, this.buttons})
       : _colorPicker = ColorPicker(),
         super(key: key);
   final ColorPicker _colorPicker;
+
+  final List<RaisedButton> buttons;
+  final Map<String, RaisedButton> menuButtons = {};
 
   /// items takes precedence over menuItems
   /// comment this out and see 5 to 8 options.
@@ -20,7 +23,13 @@ class AppMenu extends AppPopupMenu<String> {
       items.addAll(['Color Background']);
     }
 
-    items.addAll(['Option 2', 'Option 3', 'Option 4']);
+    if(buttons != null) {
+      for (final RaisedButton button in buttons) {
+        final Text text = button.child;
+        items.add(text.data);
+        menuButtons[text.data] = button;
+      }
+    }
 
     return items;
   }
@@ -48,16 +57,10 @@ class AppMenu extends AppPopupMenu<String> {
           );
         }
         break;
-
-      // case constant_expr2:
-      //   {
-      //     //statements;
-      //   }
-      //   break;
-
       default:
         {
-          //statements;
+          /// Possibly a RaisedButton is selected.
+          menuButtons[value]?.onPressed();
         }
         break;
     }
@@ -81,7 +84,8 @@ class ColorPicker {
         pickerColor: _color ?? Colors.blue,
         onColorChanged: (Color color) {
           _color = color;
-          final state = SetState.of<CountriesList>();
+          final state = StateSet.of<CountriesList>();
+          // ignore: invalid_use_of_protected_member
           state?.setState(() {});
         },
       );

@@ -7,15 +7,21 @@ import 'package:lifecycle_example/src/app/menu/app_menu.dart' show ColorPicker;
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CountriesList extends StatefulWidget {
-  const CountriesList({Key key}) : super(key: key);
+  CountriesList({Key key}) : super(key: key){
+    // ignore: avoid_print
+    print(
+        '>>>>>>>>>>>>>>>>>>>>>>>>>   CountriesList StatefulWidget constructor called.');
+  }
   @override
   State createState() => _CountriesList();
 }
 
 class _CountriesList extends LifecycleState<CountriesList> {
+  _CountriesList(){
+    // ignore: avoid_print
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>   _CountriesList(): constructor called.');
+  }
   //
-  final bool _error = false;
-  bool _loading = true;
   final List<dynamic> _countries = [];
   final NumberFormat num = NumberFormat('###,###,###,##0');
   @override
@@ -73,7 +79,7 @@ class _CountriesList extends LifecycleState<CountriesList> {
               bodyText2: TextStyle(fontSize: 20),
             ),
           ),
-          child: LifeCycleWidget(
+          child: LifeCycleWidget( // A wrap merely for demonstration purposes.
             child: Card(
               color: ColorPicker.color,
               child: Padding(

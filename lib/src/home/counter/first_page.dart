@@ -1,12 +1,7 @@
 import 'package:lifecycle_example/src/source.dart';
 
 class FirstPage extends StatefulWidget {
-  // constructor
-  FirstPage({Key key, this.title = 'First Page'}) : super(key: key) {
-    // ignore: avoid_print
-    print(
-        '>>>>>>>>>>>>>>>>>>>>>>>>>   FirstPage StatefulWidget being created. Constructor called.');
-  }
+  const FirstPage({Key key, this.title = 'First Page'}) : super(key: key);
   final String title;
 
   @override
@@ -16,17 +11,9 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends LifecycleState<FirstPage> {
   _FirstPageState() {
     // ignore: avoid_print
-    print(
-        '>>>>>>>>>>>>>>>>>>>>>>>>>   _FirstPageState being created. Constructor called.');
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>   _FirstPageState. Constructor called.');
   }
   int counter = 0;
-
-  @override
-  void initState() {
-    // ignore: avoid_print
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>   _FirstPageState initState() called.');
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +23,9 @@ class _FirstPageState extends LifecycleState<FirstPage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          AppMenu(),
+          AppMenu(
+            buttons: [secondPage],
+          ),
         ],
       ),
       body: Center(
@@ -66,25 +55,26 @@ class _FirstPageState extends LifecycleState<FirstPage> {
         child: const Icon(Icons.add),
       ),
       persistentFooterButtons: <Widget>[
-        RaisedButton(
-          onPressed: () {
-            // ignore: avoid_print
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>   'Second Page' button pressed.");
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) =>
-                    SecondPage(),
-              ),
-            );
-          },
-          child: const Text(
-            'Second Page',
-          ),
-        ),
+        secondPage,
       ],
     );
   }
+
+  RaisedButton get secondPage => RaisedButton(
+        onPressed: () {
+          // ignore: avoid_print
+          print(">>>>>>>>>>>>>>>>>>>>>>>>>   'Second Page' button pressed.");
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => SecondPage(),
+            ),
+          );
+        },
+        child: const Text(
+          'Second Page',
+        ),
+      );
 
   @override
   void deactivate() {

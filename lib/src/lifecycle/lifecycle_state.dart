@@ -17,7 +17,7 @@ class _LifecycleWidgetState extends LifecycleState<LifeCycleWidget> {
     super.initState();
     classType = widget?.child?.runtimeType?.toString();
     // ignore: avoid_print
-    print('$classType(): initState');
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>   $classType(): initState');
   }
 
   @override
@@ -25,8 +25,7 @@ class _LifecycleWidgetState extends LifecycleState<LifeCycleWidget> {
 }
 
 
-class LifecycleState<T extends StatefulWidget> extends SetState<StatefulWidget>
-    with LifeCycleObserver {
+class LifecycleState<T extends StatefulWidget> extends State<StatefulWidget> with StateSet, LifeCycleObserver {
 
   /// Return the specific Widget of type T
   @override
@@ -38,6 +37,8 @@ class LifecycleState<T extends StatefulWidget> extends SetState<StatefulWidget>
     super.initState();
     // ignore: no_runtimetype_tostring
     classType = runtimeType?.toString();
+    // ignore: avoid_print
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>   $classType(): initState');
     WidgetsBinding.instance.addObserver(this);
   }
 
